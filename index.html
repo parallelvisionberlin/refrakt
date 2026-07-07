@@ -1,170 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080808" />
+  <title>REFRAKT</title>
+  <meta name="description" content="REFRAKT. Music, image and objects from Berlin." />
 
-  <title>REFRAKT | Archive</title>
-
-  <meta
-    name="description"
-    content="REFRAKT. Audio, visual and physical objects from another timeline."
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    /* =========================
-       GLOBAL
-    ========================== */
-
     :root {
-      --black: #070707;
-      --deep-black: #030303;
-      --paper: #d8d2c5;
-      --muted: #8b887f;
-      --line: rgba(216, 210, 197, 0.22);
-      --soft-line: rgba(216, 210, 197, 0.10);
-      --signal: #b8a98c;
+      --black: #080808;
+      --black-soft: #111111;
+      --ivory: #f1eee7;
+      --paper: #e7e2d8;
+      --white: #f8f6f0;
+      --muted: #a5a097;
+      --line: rgba(255,255,255,.16);
+      --line-dark: rgba(8,8,8,.15);
+      --pad: clamp(20px, 4vw, 68px);
+      --gap: clamp(14px, 2vw, 30px);
+      --ui: Inter, Arial, sans-serif;
+      --serif: "Cormorant Garamond", Georgia, serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--black); }
     body {
+      margin: 0;
       background: var(--black);
-      color: var(--paper);
-      font-family: Arial, Helvetica, sans-serif;
-      overflow-x: hidden;
+      color: var(--white);
+      font-family: var(--ui);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    body::before {
-      content: "";
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+
+    .site-header {
       position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.05;
-      background-image:
-        repeating-radial-gradient(
-          circle at 0 0,
-          transparent 0,
-          rgba(255,255,255,0.5) 1px,
-          transparent 2px
-        );
-      background-size: 5px 5px;
-      mix-blend-mode: screen;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      height: 68px;
+      padding: 0 var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: background .3s ease, border-color .3s ease, backdrop-filter .3s ease;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    .site-header.is-scrolled {
+      background: rgba(7,7,7,.78);
+      border-color: rgba(255,255,255,.1);
+      backdrop-filter: blur(14px);
     }
 
-    button {
-      font: inherit;
-    }
-
-    .mono {
-      font-family: "Courier New", Courier, monospace;
+    .brand {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .28em;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
     }
-
-    .container {
-      width: min(1400px, calc(100% - 60px));
-      margin: 0 auto;
-    }
-
-    /* =========================
-       NAVIGATION
-    ========================== */
 
     .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
-      padding: 22px 0;
-      mix-blend-mode: difference;
-      color: white;
-    }
-
-    .nav-inner {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .nav-logo {
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.28em;
-    }
-
-    .nav-status {
-      display: flex;
-      gap: 28px;
-      align-items: center;
+      gap: 24px;
       font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
     }
 
-    .signal-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-      display: inline-block;
-      margin-right: 8px;
-      animation: pulse 2s infinite;
-    }
+    .nav a { opacity: .68; transition: opacity .2s ease; }
+    .nav a:hover { opacity: 1; }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.25; }
-    }
-
-    /* =========================
-       HERO
-    ========================== */
-
+    /* HERO: deliberately closer to an artist profile than a shop homepage */
     .hero {
       position: relative;
-      min-height: 100svh;
-      display: flex;
-      align-items: flex-end;
+      min-height: 88svh;
       overflow: hidden;
-
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(0,0,0,0.15),
-          rgba(0,0,0,0.12) 45%,
-          rgba(0,0,0,0.92)
-        ),
-        url("assets/hero.jpg");
-
-      background-size: cover;
-      background-position: center;
-      background-color: #151515;
+      background: #101010;
     }
 
-    .hero::before {
-      content: "";
+    .hero-media {
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(0,0,0,0.58),
-          transparent 45%
-        );
+      height: 100%;
+      object-fit: cover;
+      object-position: center 23%;
+      filter: grayscale(1) contrast(1.08) brightness(.78);
+      transform: scale(1.01);
     }
 
     .hero::after {
@@ -172,746 +101,704 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(
-          circle at 65% 35%,
-          transparent 0%,
-          rgba(0,0,0,0.15) 45%,
-          rgba(0,0,0,0.8) 100%
-        );
+        linear-gradient(180deg, rgba(0,0,0,.02) 0%, rgba(0,0,0,.08) 43%, rgba(0,0,0,.86) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.34) 0%, rgba(0,0,0,.04) 52%, rgba(0,0,0,.18) 100%);
+      pointer-events: none;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 3;
-      width: 100%;
-      padding: 150px 0 60px;
+    .hero-copy {
+      position: absolute;
+      z-index: 2;
+      left: var(--pad);
+      right: var(--pad);
+      bottom: clamp(34px, 5.5vh, 74px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 36px;
+      align-items: end;
     }
 
-    .archive-label {
-      font-size: 10px;
-      margin-bottom: 24px;
+    .hero-kicker,
+    .eyebrow {
+      margin: 0 0 12px;
+      font-size: 9px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      opacity: .72;
     }
 
     .hero-title {
-      font-size: clamp(70px, 14vw, 220px);
-      font-weight: 700;
-      line-height: 0.78;
-      letter-spacing: -0.07em;
+      margin: 0;
+      font-size: clamp(60px, 9.4vw, 154px);
+      line-height: .8;
+      font-weight: 600;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
     }
 
-    .hero-bottom {
-      margin-top: 55px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(255,255,255,0.4);
+    .hero-side {
+      min-width: 230px;
+      padding-bottom: 7px;
+      text-align: right;
+      font-size: 9px;
+      line-height: 1.75;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .72;
+    }
 
+    .hero-side strong {
+      display: block;
+      color: #fff;
+      font-weight: 500;
+      opacity: 1;
+    }
+
+    .intro {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 30px;
-    }
-
-    .hero-data {
-      font-size: 10px;
-      line-height: 1.8;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      gap: 12px;
-    }
-
-    .button {
-      display: inline-block;
-      border: 1px solid rgba(255,255,255,0.55);
-      padding: 15px 20px;
-      font-size: 10px;
-      transition: 0.3s ease;
-    }
-
-    .button:hover {
-      background: var(--paper);
-      color: var(--black);
-    }
-
-    /* =========================
-       MANIFESTO
-    ========================== */
-
-    .manifesto {
-      min-height: 90vh;
-      display: flex;
-      align-items: center;
+      grid-template-columns: minmax(130px, .55fr) minmax(0, 2fr);
+      gap: var(--gap);
+      padding: 72px var(--pad) 94px;
       border-bottom: 1px solid var(--line);
-      position: relative;
+      background: var(--black);
     }
 
-    .manifesto-number {
-      position: absolute;
-      top: 40px;
-      left: 0;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .manifesto-text {
-      max-width: 1200px;
-      font-family: Georgia, "Times New Roman", serif;
+    .intro h2 {
+      margin: 0;
+      max-width: 1080px;
+      font-family: var(--serif);
+      font-size: clamp(36px, 5.4vw, 82px);
+      line-height: .98;
       font-weight: 400;
-      font-size: clamp(45px, 8vw, 130px);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
+      letter-spacing: -.035em;
     }
-
-    .manifesto-text span {
-      color: var(--muted);
-    }
-
-    /* =========================
-       SECTION COMMON
-    ========================== */
 
     .section {
-      padding: 120px 0;
-      border-bottom: 1px solid var(--line);
+      padding: clamp(82px, 9vw, 138px) var(--pad);
     }
 
     .section-head {
       display: flex;
+      align-items: end;
       justify-content: space-between;
-      align-items: flex-start;
-      padding-bottom: 25px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 60px;
+      gap: 28px;
+      padding-bottom: 18px;
+      margin-bottom: clamp(28px, 4vw, 56px);
+      border-bottom: 1px solid currentColor;
+      border-color: var(--line);
     }
 
     .section-title {
-      font-size: clamp(34px, 5vw, 72px);
-      letter-spacing: -0.04em;
-      font-weight: 500;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(48px, 7vw, 112px);
+      line-height: .8;
+      font-weight: 400;
+      letter-spacing: -.04em;
     }
 
-    .section-code {
-      color: var(--muted);
-      font-size: 10px;
-      text-align: right;
-      line-height: 1.7;
+    .section-index {
+      padding-bottom: 4px;
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .56;
+      white-space: nowrap;
     }
 
-    /* =========================
-       RELEASES
-    ========================== */
+    /* RELEASES: asymmetrical, image-led, no boxed cards */
+    .releases {
+      background: var(--black);
+    }
 
-    .release {
+    .release-grid {
       display: grid;
-      grid-template-columns: 90px 1fr 250px 50px;
-      gap: 25px;
-      align-items: center;
-      min-height: 150px;
-      border-bottom: 1px solid var(--soft-line);
-      transition: 0.35s ease;
+      grid-template-columns: minmax(0, 1.65fr) minmax(240px, .68fr) minmax(240px, .68fr);
+      gap: var(--gap);
+      align-items: start;
     }
 
-    .release:hover {
-      padding-left: 20px;
-      background: rgba(255,255,255,0.025);
-    }
+    .release-card:nth-child(2) { margin-top: 10vh; }
+    .release-card:nth-child(3) { margin-top: 22vh; }
 
-    .release-number,
-    .release-year,
-    .release-arrow {
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    .release-name {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(32px, 4.5vw, 68px);
-      letter-spacing: -0.035em;
-    }
-
-    .release-year {
-      line-height: 1.7;
-    }
-
-    .release-arrow {
-      text-align: right;
-      font-size: 22px;
-    }
-
-    /* =========================
-       SHOP / COLLECTIONS
-    ========================== */
-
-    .collection-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 0.6fr;
-      min-height: 700px;
-      border: 1px solid var(--line);
-    }
-
-    .collection-image {
+    .release-media {
       position: relative;
-      min-height: 650px;
       overflow: hidden;
-
-      background:
-        linear-gradient(
-          to top,
-          rgba(0,0,0,0.75),
-          transparent 60%
-        ),
-        url("assets/collection-01.jpg");
-
-      background-size: cover;
-      background-position: center;
-      background-color: #1a1a1a;
+      background: #151515;
+      aspect-ratio: 1 / 1;
     }
 
-    .collection-image::after {
+    .release-card:first-child .release-media { aspect-ratio: 4 / 3; }
+
+    .release-media img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform .75s cubic-bezier(.2,.7,.2,1), filter .75s ease;
+    }
+
+    .release-card:hover img {
+      transform: scale(1.022);
+      filter: contrast(1.04);
+    }
+
+    .release-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: baseline;
+      padding-top: 12px;
+      margin-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .release-info h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.2vw, 38px);
+      line-height: .95;
+      font-weight: 400;
+    }
+
+    .release-info span {
+      font-size: 8px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .52;
+      white-space: nowrap;
+    }
+
+    /* EDITORIAL IMAGE WALL */
+    .editorial {
+      display: grid;
+      grid-template-columns: 1.35fr .65fr;
+      min-height: 760px;
+      background: #101010;
+    }
+
+    .editorial-panel {
+      position: relative;
+      min-height: 560px;
+      overflow: hidden;
+    }
+
+    .editorial-panel + .editorial-panel { border-left: 1px solid var(--line); }
+
+    .editorial-panel img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform .8s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .editorial-panel:first-child img { object-position: center 34%; }
+    .editorial-panel:last-child img { object-position: center 18%; }
+    .editorial-panel:hover img { transform: scale(1.016); }
+
+    .caption {
+      position: absolute;
+      left: 22px;
+      bottom: 20px;
+      font-size: 8px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      mix-blend-mode: difference;
+    }
+
+    .world {
+      position: relative;
+      min-height: 92svh;
+      overflow: hidden;
+      background: #0d0c0b;
+    }
+
+    .world > img {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(.72) contrast(1.04);
+    }
+
+    .world::after {
       content: "";
       position: absolute;
       inset: 0;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.18) 45%, rgba(0,0,0,.72));
     }
 
-    .collection-info {
-      padding: 45px;
+    .world-copy {
+      position: absolute;
+      z-index: 2;
+      left: var(--pad);
+      right: var(--pad);
+      bottom: clamp(42px, 7vw, 92px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(250px, .55fr);
+      gap: 48px;
+      align-items: end;
+    }
+
+    .world-copy h2 {
+      margin: 0;
+      max-width: 980px;
+      font-family: var(--serif);
+      font-size: clamp(58px, 8.5vw, 138px);
+      line-height: .78;
+      font-weight: 400;
+      letter-spacing: -.045em;
+    }
+
+    .world-copy p {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(21px, 2vw, 31px);
+      line-height: 1.06;
+      font-style: italic;
+    }
+
+    /* SHOP: catalogue wall, not cards */
+    .shop {
+      background: var(--ivory);
+      color: var(--black);
+    }
+
+    .shop .section-head { border-color: var(--line-dark); }
+
+    .shop-intro {
+      max-width: 740px;
+      margin: -10px 0 52px auto;
+      font-family: var(--serif);
+      font-size: clamp(23px, 2.7vw, 40px);
+      line-height: 1.06;
+      font-style: italic;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(34px, 5vw, 72px) var(--gap);
+      align-items: start;
+    }
+
+    .product-card:nth-child(1),
+    .product-card:nth-child(7) { grid-column: span 2; }
+
+    .product-media {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: #f7f4ed;
+      aspect-ratio: 1 / 1.02;
+    }
+
+    .product-media img {
+      height: 100%;
+      object-fit: contain;
+      transition: transform .65s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .product-card:hover img { transform: scale(1.018); }
+
+    .product-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      margin-top: 11px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .product-info h3 {
+      margin: 0;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .product-info span {
+      font-size: 8px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      opacity: .48;
+      white-space: nowrap;
+    }
+
+    .archive {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      min-height: 84svh;
+      background: var(--black-soft);
+    }
+
+    .archive-image {
+      overflow: hidden;
+      min-height: 600px;
+    }
+
+    .archive-image img {
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(1) contrast(1.06);
+    }
+
+    .archive-copy {
+      padding: var(--pad);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: #0a0a0a;
+      gap: 60px;
+      border-left: 1px solid var(--line);
     }
 
-    .collection-label {
-      font-size: 10px;
-      color: var(--muted);
+    .archive-copy h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(58px, 7vw, 112px);
+      line-height: .78;
+      font-weight: 400;
+      letter-spacing: -.04em;
     }
 
-    .collection-title {
-      margin-top: 30px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(44px, 5vw, 80px);
-      line-height: 0.93;
-      letter-spacing: -0.05em;
+    .archive-copy > p {
+      margin: 0;
+      max-width: 460px;
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.5vw, 40px);
+      line-height: 1.03;
+      font-style: italic;
     }
 
-    .collection-meta {
-      border-top: 1px solid var(--line);
-      padding-top: 20px;
-      font-size: 10px;
-      line-height: 2;
-      color: var(--muted);
-    }
-
-    .collection-enter {
-      margin-top: 30px;
-      font-size: 11px;
+    .archive-foot {
       display: flex;
-      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding-top: 14px;
       border-top: 1px solid var(--line);
-      padding-top: 20px;
+      font-size: 8px;
+      letter-spacing: .21em;
+      text-transform: uppercase;
+      opacity: .58;
     }
-
-    /* =========================
-       DOSSIER
-    ========================== */
-
-    .dossier {
-      display: grid;
-      grid-template-columns: 0.7fr 1.3fr;
-      gap: 80px;
-    }
-
-    .dossier-photo {
-      aspect-ratio: 3 / 4;
-
-      background:
-        linear-gradient(
-          to top,
-          rgba(0,0,0,0.5),
-          transparent
-        ),
-        url("assets/refrakt.jpg");
-
-      background-size: cover;
-      background-position: center;
-      background-color: #171717;
-
-      filter: grayscale(1);
-    }
-
-    .dossier-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .dossier-heading {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(45px, 7vw, 105px);
-      line-height: 0.9;
-      letter-spacing: -0.05em;
-    }
-
-    .dossier-copy {
-      max-width: 600px;
-      margin-top: 80px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 23px;
-      line-height: 1.45;
-      color: #b9b5ac;
-    }
-
-    .dossier-data {
-      margin-top: 60px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      padding-top: 25px;
-      border-top: 1px solid var(--line);
-    }
-
-    .data-block {
-      font-size: 10px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    /* =========================
-       FOOTER
-    ========================== */
 
     footer {
-      min-height: 60vh;
-      display: flex;
-      align-items: flex-end;
-      padding: 60px 0;
-    }
-
-    .footer-title {
-      font-size: clamp(70px, 16vw, 250px);
-      line-height: 0.72;
-      letter-spacing: -0.075em;
-      font-weight: 700;
-    }
-
-    .footer-data {
-      margin-top: 60px;
+      min-height: 150px;
+      padding: 34px var(--pad);
       display: flex;
       justify-content: space-between;
-      padding-top: 20px;
+      align-items: flex-end;
+      gap: 20px;
       border-top: 1px solid var(--line);
-      font-size: 10px;
-      color: var(--muted);
+      background: var(--black);
+      font-size: 8px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.56);
     }
 
-    /* =========================
-       REVEAL EFFECT
-    ========================== */
+    footer span:first-child {
+      font-size: clamp(34px, 4.4vw, 70px);
+      font-weight: 600;
+      letter-spacing: -.04em;
+      color: var(--white);
+    }
 
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition:
-        opacity 0.9s ease,
-        transform 0.9s ease;
+      transform: translateY(18px);
+      transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
     }
 
-    .reveal.visible {
+    .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* =========================
-       MOBILE
-    ========================== */
+    @media (max-width: 1100px) {
+      .release-grid { grid-template-columns: 1.45fr 1fr; }
+      .release-card:nth-child(2) { margin-top: 8vh; }
+      .release-card:nth-child(3) { grid-column: 2; margin-top: 0; }
+      .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .product-card:nth-child(1),
+      .product-card:nth-child(7) { grid-column: span 1; }
+    }
 
-    @media (max-width: 800px) {
+    @media (max-width: 760px) {
+      .site-header { height: 62px; }
+      .nav { gap: 14px; }
+      .nav a:nth-child(3) { display: none; }
 
-      .container {
-        width: calc(100% - 32px);
-      }
+      .hero { min-height: 82svh; }
+      .hero-media { object-position: 52% 18%; }
+      .hero-copy { grid-template-columns: 1fr; gap: 20px; }
+      .hero-side { text-align: left; min-width: 0; }
+      .hero-title { font-size: clamp(58px, 18vw, 98px); }
 
-      .nav-status .desktop-only {
-        display: none;
-      }
+      .intro { grid-template-columns: 1fr; padding-top: 54px; padding-bottom: 68px; }
+      .section-head { align-items: flex-start; }
 
-      .hero-bottom {
-        grid-template-columns: 1fr;
-      }
+      .release-grid { grid-template-columns: 1fr; }
+      .release-card:nth-child(2),
+      .release-card:nth-child(3) { margin-top: 0; grid-column: auto; }
+      .release-card:first-child .release-media,
+      .release-media { aspect-ratio: 4 / 3; }
 
-      .hero-actions {
-        justify-content: flex-start;
-      }
+      .editorial { grid-template-columns: 1fr; min-height: 0; }
+      .editorial-panel { min-height: 64svh; }
+      .editorial-panel + .editorial-panel { border-left: 0; border-top: 1px solid var(--line); }
 
-      .release {
-        grid-template-columns: 45px 1fr 25px;
-      }
+      .world { min-height: 82svh; }
+      .world-copy { grid-template-columns: 1fr; gap: 22px; }
 
-      .release-year {
-        display: none;
-      }
+      .shop-intro { margin: 0 0 38px; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-      .collection-grid {
-        grid-template-columns: 1fr;
-      }
+      .archive { grid-template-columns: 1fr; min-height: 0; }
+      .archive-image { min-height: 66svh; }
+      .archive-copy { min-height: 540px; border-left: 0; border-top: 1px solid var(--line); }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
 
-      .collection-image {
-        min-height: 500px;
-      }
+    @media (max-width: 480px) {
+      .nav a:nth-child(1) { display: none; }
+      .hero-side { display: none; }
+      .section-index { display: none; }
+      .product-grid { grid-template-columns: 1fr; }
+    }
 
-      .dossier {
-        grid-template-columns: 1fr;
-        gap: 50px;
-      }
-
-      .dossier-copy {
-        margin-top: 40px;
-      }
-
-      .section {
-        padding: 80px 0;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .release-media img,
+      .editorial-panel img,
+      .product-media img { transition: none; }
     }
   </style>
 </head>
-
 <body>
-
-  <!-- NAVIGATION -->
-
-  <nav class="nav">
-    <div class="container nav-inner">
-
-      <a href="#" class="nav-logo">
-        REFRAKT
-      </a>
-
-      <div class="nav-status mono">
-        <span class="desktop-only">
-          ARCHIVE SYSTEM
-        </span>
-
-        <span>
-          <span class="signal-dot"></span>
-          SIGNAL ACTIVE
-        </span>
-      </div>
-
-    </div>
-  </nav>
-
-
-  <!-- HERO -->
-
-  <header class="hero">
-
-    <div class="container hero-content">
-
-      <div class="archive-label mono">
-        REFRAKT ARCHIVE SYSTEM / ENTRY TERMINAL
-      </div>
-
-      <h1 class="hero-title">
-        REFRAKT
-      </h1>
-
-      <div class="hero-bottom">
-
-        <div class="hero-data mono">
-          ARCHIVE / 001<br>
-          STATUS / ACTIVE<br>
-          LOCATION / UNKNOWN
-        </div>
-
-        <div class="hero-data mono">
-          AUDIO / VISUAL<br>
-          PHYSICAL OBJECTS<br>
-          EST. 2026
-        </div>
-
-        <div class="hero-actions">
-          <a href="#archive" class="button mono">
-            Enter Archive
-          </a>
-
-          <a href="#objects" class="button mono">
-            Shop Objects
-          </a>
-        </div>
-
-      </div>
-
-    </div>
-
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#top">REFRAKT</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#releases">Releases</a>
+      <a href="#shop">Objects</a>
+      <a href="#archive">Archive</a>
+    </nav>
   </header>
 
-
-  <!-- MANIFESTO -->
-
-  <section class="manifesto">
-
-    <div class="container">
-
-      <div class="manifesto-number mono">
-        STATEMENT / 0001
+  <main id="top">
+    <section class="hero">
+      <img class="hero-media" src="ianbw20s.png" alt="REFRAKT artist portrait" />
+      <div class="hero-copy">
+        <div>
+          <p class="hero-kicker">Artist</p>
+          <h1 class="hero-title">REFRAKT</h1>
+        </div>
+        <div class="hero-side">
+          <span>Latest release</span>
+          <strong>Built to Last</strong>
+          <span>Berlin / 2026</span>
+        </div>
       </div>
+    </section>
 
-      <h2 class="manifesto-text reveal">
-        THE CITY REMEMBERS
-        <span>WHAT THE BODY FORGETS.</span>
-      </h2>
+    <section class="intro reveal">
+      <p class="eyebrow">REFRAKT / BERLIN</p>
+      <h2>Sound, image and objects from a future remembered with the wrong date.</h2>
+    </section>
 
-    </div>
-
-  </section>
-
-
-  <!-- RELEASE ARCHIVES -->
-
-  <section class="section" id="archive">
-
-    <div class="container">
-
+    <section class="section releases" id="releases">
       <div class="section-head reveal">
-
-        <h2 class="section-title">
-          Release Archives
-        </h2>
-
-        <div class="section-code mono">
-          AUDIO RECORDS<br>
-          PUBLIC ACCESS
+        <div>
+          <p class="eyebrow">Selected recordings</p>
+          <h2 class="section-title">Releases</h2>
         </div>
-
+        <span class="section-index">01 / 03</span>
       </div>
 
+      <div class="release-grid">
+        <article class="release-card reveal">
+          <div class="release-media">
+            <img src="Builttolast.png" alt="Built to Last artwork" loading="lazy" />
+          </div>
+          <div class="release-info">
+            <h3>Built to Last</h3>
+            <span>Latest</span>
+          </div>
+        </article>
 
-      <a href="#" class="release reveal">
+        <article class="release-card reveal">
+          <div class="release-media">
+            <img src="Cabanamolinari.JPG" alt="Cabana Molinari artwork" loading="lazy" />
+          </div>
+          <div class="release-info">
+            <h3>Cabana / Molinari</h3>
+            <span>02</span>
+          </div>
+        </article>
 
-        <div class="release-number mono">
-          001
-        </div>
-
-        <div class="release-name">
-          Built to Last
-        </div>
-
-        <div class="release-year mono">
-          2026<br>
-          RECORD ACTIVE
-        </div>
-
-        <div class="release-arrow">
-          ↗
-        </div>
-
-      </a>
-
-
-      <div class="release reveal">
-
-        <div class="release-number mono">
-          002
-        </div>
-
-        <div class="release-name">
-          Classified
-        </div>
-
-        <div class="release-year mono">
-          INCOMING<br>
-          ACCESS DENIED
-        </div>
-
-        <div class="release-arrow">
-          +
-        </div>
-
+        <article class="release-card reveal">
+          <div class="release-media">
+            <img src="hiddentempleart.jpg" alt="Hidden Temple artwork" loading="lazy" />
+          </div>
+          <div class="release-info">
+            <h3>Hidden Temple</h3>
+            <span>03</span>
+          </div>
+        </article>
       </div>
+    </section>
 
-    </div>
+    <section class="editorial" aria-label="Editorial campaign">
+      <div class="editorial-panel">
+        <img src="hero.png" alt="REFRAKT campaign portrait" loading="lazy" />
+        <span class="caption">Campaign / 01</span>
+      </div>
+      <div class="editorial-panel">
+        <img src="iancoolpic.png" alt="REFRAKT archive portrait" loading="lazy" />
+        <span class="caption">Archive / 01</span>
+      </div>
+    </section>
 
-  </section>
+    <section class="world">
+      <img src="diesellandscape.png" alt="REFRAKT archive city" loading="lazy" />
+      <div class="world-copy reveal">
+        <h2>The future remembers.</h2>
+        <p>Images recovered from a city that never existed, but somehow feels familiar.</p>
+      </div>
+    </section>
 
-
-  <!-- OBJECTS / SHOP -->
-
-  <section class="section" id="objects">
-
-    <div class="container">
-
+    <section class="section shop" id="shop">
       <div class="section-head reveal">
-
-        <h2 class="section-title">
-          Physical Objects
-        </h2>
-
-        <div class="section-code mono">
-          RELEASE CONNECTED<br>
-          LIMITED SERIES
+        <div>
+          <p class="eyebrow">Collection 01</p>
+          <h2 class="section-title">Objects</h2>
         </div>
-
+        <span class="section-index">Selected pieces</span>
       </div>
 
+      <p class="shop-intro reveal">The image is the product. No decorative catalogue language around it.</p>
 
-      <a href="#" class="collection-grid reveal">
+      <div class="product-grid">
+        <article class="product-card reveal">
+          <div class="product-media"><img src="bestone.png" alt="REFRAKT white tank top" loading="lazy" /></div>
+          <div class="product-info"><h3>White Tank 01</h3><span>REF / 01</span></div>
+        </article>
 
-        <div class="collection-image"></div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="blackbuiltolast.png" alt="Built to Last black T-shirt" loading="lazy" /></div>
+          <div class="product-info"><h3>Built to Last</h3><span>REF / 02</span></div>
+        </article>
 
-        <div class="collection-info">
+        <article class="product-card reveal">
+          <div class="product-media"><img src="blacktshirtrefrakt.png" alt="Black REFRAKT T-shirt" loading="lazy" /></div>
+          <div class="product-info"><h3>Refrakt Black</h3><span>REF / 03</span></div>
+        </article>
 
-          <div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="dieselpunk.png" alt="REFRAKT dieselpunk tank top" loading="lazy" /></div>
+          <div class="product-info"><h3>Archive Black Tank</h3><span>REF / 04</span></div>
+        </article>
 
-            <div class="collection-label mono">
-              COLLECTION / 001
-            </div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="dieselrefrakt.png" alt="REFRAKT white archive tank" loading="lazy" /></div>
+          <div class="product-info"><h3>Archive White</h3><span>REF / 05</span></div>
+        </article>
 
-            <h3 class="collection-title">
-              Built<br>
-              to Last
-            </h3>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="dieselrefrakt2.png" alt="REFRAKT white archive tank 02" loading="lazy" /></div>
+          <div class="product-info"><h3>Archive White 02</h3><span>REF / 06</span></div>
+        </article>
 
-          </div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="tanktopblack.png" alt="Black REFRAKT tank top" loading="lazy" /></div>
+          <div class="product-info"><h3>Black Tank</h3><span>REF / 07</span></div>
+        </article>
 
-          <div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="cape.png" alt="REFRAKT black cap" loading="lazy" /></div>
+          <div class="product-info"><h3>Logo Cap</h3><span>REF / 08</span></div>
+        </article>
 
-            <div class="collection-meta mono">
-              OBJECTS / 10<br>
-              ORGANIC COTTON<br>
-              RELEASE ARCHIVE / 001<br>
-              STATUS / AVAILABLE
-            </div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="secondbest.png" alt="REFRAKT portrait T-shirt" loading="lazy" /></div>
+          <div class="product-info"><h3>Portrait Tee</h3><span>REF / 09</span></div>
+        </article>
 
-            <div class="collection-enter mono">
-              <span>Enter Collection</span>
-              <span>↗</span>
-            </div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="thirdbest.png" alt="REFRAKT outerwear" loading="lazy" /></div>
+          <div class="product-info"><h3>Outerwear 01</h3><span>REF / 10</span></div>
+        </article>
 
-          </div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="toadbag.png" alt="REFRAKT tote bag" loading="lazy" /></div>
+          <div class="product-info"><h3>Tote 01</h3><span>REF / 11</span></div>
+        </article>
 
-        </div>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="pillow.png" alt="REFRAKT pillow" loading="lazy" /></div>
+          <div class="product-info"><h3>Object 01</h3><span>REF / 12</span></div>
+        </article>
 
-      </a>
+        <article class="product-card reveal">
+          <div class="product-media"><img src="Tshirt%20Black%20Refrakt.png" alt="Black REFRAKT logo T-shirt" loading="lazy" /></div>
+          <div class="product-info"><h3>Logo Tee</h3><span>REF / 13</span></div>
+        </article>
 
-    </div>
-
-  </section>
-
-
-  <!-- PERSONNEL FILE -->
-
-  <section class="section">
-
-    <div class="container">
-
-      <div class="section-head reveal">
-
-        <h2 class="section-title">
-          Personnel File
-        </h2>
-
-        <div class="section-code mono">
-          SUBJECT / REFRAKT<br>
-          FILE OPEN
-        </div>
-
+        <article class="product-card reveal">
+          <div class="product-media"><img src="Toad%20Bag.png" alt="REFRAKT tote bag alternate" loading="lazy" /></div>
+          <div class="product-info"><h3>Tote 02</h3><span>REF / 14</span></div>
+        </article>
       </div>
+    </section>
 
-
-      <div class="dossier">
-
-        <div class="dossier-photo reveal"></div>
-
-        <div class="dossier-content">
-
-          <div>
-
-            <h3 class="dossier-heading reveal">
-              An artist<br>
-              outside<br>
-              the timeline.
-            </h3>
-
-            <p class="dossier-copy reveal">
-              Music transmitted through nocturnal cities,
-              mechanical memory and fragments of futures
-              that never arrived.
-            </p>
-
-          </div>
-
-          <div class="dossier-data reveal">
-
-            <div class="data-block mono">
-              SUBJECT<br>
-              REFRAKT
-            </div>
-
-            <div class="data-block mono">
-              CLASSIFICATION<br>
-              AUDIO / VISUAL
-            </div>
-
-          </div>
-
-        </div>
-
+    <section class="archive" id="archive">
+      <div class="archive-image">
+        <img src="refraktportrait.png" alt="REFRAKT portrait" loading="lazy" />
       </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- FOOTER -->
+      <div class="archive-copy reveal">
+        <div>
+          <p class="eyebrow">REFRAKT / BERLIN</p>
+          <h2>Archive 01</h2>
+        </div>
+        <p>Not nostalgia. Not science fiction. A future that arrived with the wrong date.</p>
+        <div class="archive-foot">
+          <span>Sound</span>
+          <span>Image</span>
+          <span>Objects</span>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-
-    <div class="container">
-
-      <div class="footer-title">
-        REFRAKT
-      </div>
-
-      <div class="footer-data mono">
-
-        <span>
-          ARCHIVE REMAINS ACTIVE
-        </span>
-
-        <span>
-          © 2026
-        </span>
-
-      </div>
-
-    </div>
-
+    <span>REFRAKT</span>
+    <span>Berlin</span>
+    <span>© 2026</span>
   </footer>
 
-
   <script>
-    const reveals = document.querySelectorAll(".reveal");
+    const header = document.getElementById('siteHeader');
+    const reveals = document.querySelectorAll('.reveal');
 
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      {
-        threshold: 0.15
-      }
-    );
+    const onScroll = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
 
-    reveals.forEach(element => {
-      observer.observe(element);
-    });
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach((el) => observer.observe(el));
   </script>
-
 </body>
 </html>
