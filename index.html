@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>REFRAKT | Archive</title>
+
+  <meta
+    name="description"
+    content="REFRAKT. Audio, visual and physical objects from another timeline."
+  >
+
+  <style>
+    /* =========================
+       GLOBAL
+    ========================== */
+
+    :root {
+      --black: #070707;
+      --deep-black: #030303;
+      --paper: #d8d2c5;
+      --muted: #8b887f;
+      --line: rgba(216, 210, 197, 0.22);
+      --soft-line: rgba(216, 210, 197, 0.10);
+      --signal: #b8a98c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.05;
+      background-image:
+        repeating-radial-gradient(
+          circle at 0 0,
+          transparent 0,
+          rgba(255,255,255,0.5) 1px,
+          transparent 2px
+        );
+      background-size: 5px 5px;
+      mix-blend-mode: screen;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .mono {
+      font-family: "Courier New", Courier, monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .container {
+      width: min(1400px, calc(100% - 60px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================== */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 22px 0;
+      mix-blend-mode: difference;
+      color: white;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+    }
+
+    .nav-status {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      font-size: 10px;
+    }
+
+    .signal-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      display: inline-block;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.15),
+          rgba(0,0,0,0.12) 45%,
+          rgba(0,0,0,0.92)
+        ),
+        url("assets/hero.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-color: #151515;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0,0,0,0.58),
+          transparent 45%
+        );
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(
+          circle at 65% 35%,
+          transparent 0%,
+          rgba(0,0,0,0.15) 45%,
+          rgba(0,0,0,0.8) 100%
+        );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      padding: 150px 0 60px;
+    }
+
+    .archive-label {
+      font-size: 10px;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: clamp(70px, 14vw, 220px);
+      font-weight: 700;
+      line-height: 0.78;
+      letter-spacing: -0.07em;
+    }
+
+    .hero-bottom {
+      margin-top: 55px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.4);
+
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 30px;
+    }
+
+    .hero-data {
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.55);
+      padding: 15px 20px;
+      font-size: 10px;
+      transition: 0.3s ease;
+    }
+
+    .button:hover {
+      background: var(--paper);
+      color: var(--black);
+    }
+
+    /* =========================
+       MANIFESTO
+    ========================== */
+
+    .manifesto {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+
+    .manifesto-number {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .manifesto-text {
+      max-width: 1200px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(45px, 8vw, 130px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .manifesto-text span {
+      color: var(--muted);
+    }
+
+    /* =========================
+       SECTION COMMON
+    ========================== */
+
+    .section {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5vw, 72px);
+      letter-spacing: -0.04em;
+      font-weight: 500;
+    }
+
+    .section-code {
+      color: var(--muted);
+      font-size: 10px;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       RELEASES
+    ========================== */
+
+    .release {
+      display: grid;
+      grid-template-columns: 90px 1fr 250px 50px;
+      gap: 25px;
+      align-items: center;
+      min-height: 150px;
+      border-bottom: 1px solid var(--soft-line);
+      transition: 0.35s ease;
+    }
+
+    .release:hover {
+      padding-left: 20px;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .release-number,
+    .release-year,
+    .release-arrow {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .release-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(32px, 4.5vw, 68px);
+      letter-spacing: -0.035em;
+    }
+
+    .release-year {
+      line-height: 1.7;
+    }
+
+    .release-arrow {
+      text-align: right;
+      font-size: 22px;
+    }
+
+    /* =========================
+       SHOP / COLLECTIONS
+    ========================== */
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      min-height: 700px;
+      border: 1px solid var(--line);
+    }
+
+    .collection-image {
+      position: relative;
+      min-height: 650px;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(0,0,0,0.75),
+          transparent 60%
+        ),
+        url("assets/collection-01.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-color: #1a1a1a;
+    }
+
+    .collection-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .collection-info {
+      padding: 45px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #0a0a0a;
+    }
+
+    .collection-label {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .collection-title {
+      margin-top: 30px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(44px, 5vw, 80px);
+      line-height: 0.93;
+      letter-spacing: -0.05em;
+    }
+
+    .collection-meta {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+      font-size: 10px;
+      line-height: 2;
+      color: var(--muted);
+    }
+
+    .collection-enter {
+      margin-top: 30px;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+
+    /* =========================
+       DOSSIER
+    ========================== */
+
+    .dossier {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 80px;
+    }
+
+    .dossier-photo {
+      aspect-ratio: 3 / 4;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(0,0,0,0.5),
+          transparent
+        ),
+        url("assets/refrakt.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-color: #171717;
+
+      filter: grayscale(1);
+    }
+
+    .dossier-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dossier-heading {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(45px, 7vw, 105px);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+
+    .dossier-copy {
+      max-width: 600px;
+      margin-top: 80px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 23px;
+      line-height: 1.45;
+      color: #b9b5ac;
+    }
+
+    .dossier-data {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      padding-top: 25px;
+      border-top: 1px solid var(--line);
+    }
+
+    .data-block {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer {
+      min-height: 60vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 60px 0;
+    }
+
+    .footer-title {
+      font-size: clamp(70px, 16vw, 250px);
+      line-height: 0.72;
+      letter-spacing: -0.075em;
+      font-weight: 700;
+    }
+
+    .footer-data {
+      margin-top: 60px;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    /* =========================
+       REVEAL EFFECT
+    ========================== */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity 0.9s ease,
+        transform 0.9s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 800px) {
+
+      .container {
+        width: calc(100% - 32px);
+      }
+
+      .nav-status .desktop-only {
+        display: none;
+      }
+
+      .hero-bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        justify-content: flex-start;
+      }
+
+      .release {
+        grid-template-columns: 45px 1fr 25px;
+      }
+
+      .release-year {
+        display: none;
+      }
+
+      .collection-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .collection-image {
+        min-height: 500px;
+      }
+
+      .dossier {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+
+      .dossier-copy {
+        margin-top: 40px;
+      }
+
+      .section {
+        padding: 80px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+
+  <nav class="nav">
+    <div class="container nav-inner">
+
+      <a href="#" class="nav-logo">
+        REFRAKT
+      </a>
+
+      <div class="nav-status mono">
+        <span class="desktop-only">
+          ARCHIVE SYSTEM
+        </span>
+
+        <span>
+          <span class="signal-dot"></span>
+          SIGNAL ACTIVE
+        </span>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+
+  <header class="hero">
+
+    <div class="container hero-content">
+
+      <div class="archive-label mono">
+        REFRAKT ARCHIVE SYSTEM / ENTRY TERMINAL
+      </div>
+
+      <h1 class="hero-title">
+        REFRAKT
+      </h1>
+
+      <div class="hero-bottom">
+
+        <div class="hero-data mono">
+          ARCHIVE / 001<br>
+          STATUS / ACTIVE<br>
+          LOCATION / UNKNOWN
+        </div>
+
+        <div class="hero-data mono">
+          AUDIO / VISUAL<br>
+          PHYSICAL OBJECTS<br>
+          EST. 2026
+        </div>
+
+        <div class="hero-actions">
+          <a href="#archive" class="button mono">
+            Enter Archive
+          </a>
+
+          <a href="#objects" class="button mono">
+            Shop Objects
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- MANIFESTO -->
+
+  <section class="manifesto">
+
+    <div class="container">
+
+      <div class="manifesto-number mono">
+        STATEMENT / 0001
+      </div>
+
+      <h2 class="manifesto-text reveal">
+        THE CITY REMEMBERS
+        <span>WHAT THE BODY FORGETS.</span>
+      </h2>
+
+    </div>
+
+  </section>
+
+
+  <!-- RELEASE ARCHIVES -->
+
+  <section class="section" id="archive">
+
+    <div class="container">
+
+      <div class="section-head reveal">
+
+        <h2 class="section-title">
+          Release Archives
+        </h2>
+
+        <div class="section-code mono">
+          AUDIO RECORDS<br>
+          PUBLIC ACCESS
+        </div>
+
+      </div>
+
+
+      <a href="#" class="release reveal">
+
+        <div class="release-number mono">
+          001
+        </div>
+
+        <div class="release-name">
+          Built to Last
+        </div>
+
+        <div class="release-year mono">
+          2026<br>
+          RECORD ACTIVE
+        </div>
+
+        <div class="release-arrow">
+          ↗
+        </div>
+
+      </a>
+
+
+      <div class="release reveal">
+
+        <div class="release-number mono">
+          002
+        </div>
+
+        <div class="release-name">
+          Classified
+        </div>
+
+        <div class="release-year mono">
+          INCOMING<br>
+          ACCESS DENIED
+        </div>
+
+        <div class="release-arrow">
+          +
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- OBJECTS / SHOP -->
+
+  <section class="section" id="objects">
+
+    <div class="container">
+
+      <div class="section-head reveal">
+
+        <h2 class="section-title">
+          Physical Objects
+        </h2>
+
+        <div class="section-code mono">
+          RELEASE CONNECTED<br>
+          LIMITED SERIES
+        </div>
+
+      </div>
+
+
+      <a href="#" class="collection-grid reveal">
+
+        <div class="collection-image"></div>
+
+        <div class="collection-info">
+
+          <div>
+
+            <div class="collection-label mono">
+              COLLECTION / 001
+            </div>
+
+            <h3 class="collection-title">
+              Built<br>
+              to Last
+            </h3>
+
+          </div>
+
+          <div>
+
+            <div class="collection-meta mono">
+              OBJECTS / 10<br>
+              ORGANIC COTTON<br>
+              RELEASE ARCHIVE / 001<br>
+              STATUS / AVAILABLE
+            </div>
+
+            <div class="collection-enter mono">
+              <span>Enter Collection</span>
+              <span>↗</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- PERSONNEL FILE -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="section-head reveal">
+
+        <h2 class="section-title">
+          Personnel File
+        </h2>
+
+        <div class="section-code mono">
+          SUBJECT / REFRAKT<br>
+          FILE OPEN
+        </div>
+
+      </div>
+
+
+      <div class="dossier">
+
+        <div class="dossier-photo reveal"></div>
+
+        <div class="dossier-content">
+
+          <div>
+
+            <h3 class="dossier-heading reveal">
+              An artist<br>
+              outside<br>
+              the timeline.
+            </h3>
+
+            <p class="dossier-copy reveal">
+              Music transmitted through nocturnal cities,
+              mechanical memory and fragments of futures
+              that never arrived.
+            </p>
+
+          </div>
+
+          <div class="dossier-data reveal">
+
+            <div class="data-block mono">
+              SUBJECT<br>
+              REFRAKT
+            </div>
+
+            <div class="data-block mono">
+              CLASSIFICATION<br>
+              AUDIO / VISUAL
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-title">
+        REFRAKT
+      </div>
+
+      <div class="footer-data mono">
+
+        <span>
+          ARCHIVE REMAINS ACTIVE
+        </span>
+
+        <span>
+          © 2026
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <script>
+    const reveals = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      {
+        threshold: 0.15
+      }
+    );
+
+    reveals.forEach(element => {
+      observer.observe(element);
+    });
+  </script>
+
+</body>
+</html>
