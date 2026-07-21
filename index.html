@@ -191,7 +191,7 @@
 
     .release-grid {
       display: grid;
-      grid-template-columns: 1.7fr 1fr 1fr;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: var(--gap);
     }
 
@@ -202,16 +202,14 @@
     .release-media {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
       background: #171717;
     }
-
-    .release-card:first-child .release-media { aspect-ratio: 16 / 11; }
 
     .release-media img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       transition: transform .7s cubic-bezier(.2,.7,.2,1), filter .7s ease;
     }
 
@@ -431,8 +429,7 @@
     }
 
     @media (max-width: 1100px) {
-      .release-grid { grid-template-columns: 1.4fr 1fr; }
-      .release-card:last-child { grid-column: 2; }
+      .release-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .campaign { grid-template-columns: 1fr 1fr; }
     }
@@ -453,10 +450,6 @@
       .intro { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 68px; }
       .releases { padding-top: 72px; padding-bottom: 88px; }
       .release-grid { grid-template-columns: 1fr; }
-      .release-card:last-child { grid-column: auto; }
-      .release-card:first-child .release-media,
-      .release-media { aspect-ratio: 4 / 3; }
-
       .campaign { grid-template-columns: 1fr; min-height: 0; }
       .campaign-main,
       .campaign-side { min-height: 62vh; }
@@ -501,7 +494,7 @@
 
   <main id="top">
     <section class="hero">
-      <img class="hero-media" src="./cyberpunkian.png" alt="REFRAKT archive city" />
+      <img class="hero-media" src="./ianbw20s.png" alt="REFRAKT black-and-white artist portrait" />
       <div class="hero-copy">
         <div>
           <p class="hero-kicker">Berlin / Archive 01</p>
@@ -526,13 +519,13 @@
           <p class="section-kicker">Selected</p>
           <h2>Releases</h2>
         </div>
-        <span class="section-index">01 / 03</span>
+        <span class="section-index">01 / 04</span>
       </div>
 
       <div class="release-grid">
         <article class="release-card reveal">
           <div class="release-media">
-            <img src="./builtolast.png" alt="Built to Last artwork" loading="lazy" />
+            <img src="./artbuilt1.png" alt="REFRAKT (NY) — Built To Last cover artwork" loading="lazy" />
           </div>
           <div class="release-label">
             <strong>Built to Last</strong>
@@ -542,21 +535,31 @@
 
         <article class="release-card reveal">
           <div class="release-media">
-            <img src="./cabanamolinariremix.png" alt="Cabana Molinari artwork" loading="lazy" />
+            <img src="./Cabanamolinari.JPG" alt="REFRAKT (NY) — Built To Last (Molinari &amp; Cabana Remix) cover artwork" loading="lazy" />
           </div>
           <div class="release-label">
-            <strong>Cabana / Molinari</strong>
+            <strong>Built To Last (Molinari &amp; Cabana Remix)</strong>
             <span>Release 02</span>
           </div>
         </article>
 
         <article class="release-card reveal">
           <div class="release-media">
-            <img src="./secondbest.png" alt="Hidden Temple artwork" loading="lazy" />
+            <img src="./cabanaremix.png" alt="REFRAKT (NY) — Built To Last (Alvaro Cabana Remix) cover artwork" loading="lazy" />
+          </div>
+          <div class="release-label">
+            <strong>Built To Last (Alvaro Cabana Remix)</strong>
+            <span>Release 03</span>
+          </div>
+        </article>
+
+        <article class="release-card reveal">
+          <div class="release-media">
+            <img src="./hiddentemple.jpg" alt="REFRAKT (NY) — Hidden Temple cover artwork" loading="lazy" />
           </div>
           <div class="release-label">
             <strong>Hidden Temple</strong>
-            <span>Release 03</span>
+            <span>Release 04</span>
           </div>
         </article>
       </div>
@@ -564,11 +567,11 @@
 
     <section class="campaign" aria-label="Editorial campaign">
       <div class="campaign-main">
-        <img src="./Tshirt%20Black%20Refrakt.png" alt="REFRAKT portrait" loading="lazy" />
+        <img src="./hero.png" alt="REFRAKT portrait" loading="lazy" />
         <div class="campaign-caption">Portrait / Berlin</div>
       </div>
       <div class="campaign-side">
-        <img src="./dieselpunk.png" alt="REFRAKT campaign image" loading="lazy" />
+        <img src="./refraktportrait.png" alt="REFRAKT campaign portrait" loading="lazy" />
         <div class="campaign-caption">Campaign / 01</div>
       </div>
     </section>
